@@ -1,0 +1,38 @@
+% Style file
+\usepackage{xcolor,graphicx,amssymb,amsmath,amsfonts,wasysym,float,siunitx,enumitem}
+\DeclareSIUnit\torr{torr}
+
+% Customize the sections:
+\usepackage{titlesec}
+% Turn on section numbering
+\setcounter{secnumdepth}{2}
+% chapter format
+\titleformat{\chapter}%
+  {\huge\sffamily\bfseries}% format applied to label+text
+  {\llap{\colorbox{cyan}{\parbox{1.5cm}{\hfill\itshape\huge\color{white}\thechapter}}}}% label
+  {2pt}% horizontal separation between label and title body
+  {}% before the title body
+  []% after the title body
+% section format
+\titleformat{\section}%
+  {\sffamily\Large\bfseries}% format applied to label+text
+  {\thesection}% label
+  {1 em}% horizontal separation between label and title body
+  {}% before the title body
+  []% after the title body
+  
+\titleformat{\subsection}%
+  {\sffamily\large}% format applied to label+text
+  {\thesubsection}% label
+  {4 pt}% horizontal separation between label and title body
+  {}% before the title body
+  []% after the title body
+  
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=ForestGreen,
+    filecolor=magenta,
+    citecolor=blue,
+    pdftitle={Low jitter plasma channel in 3D printed gas filled capillary discharges}
+}

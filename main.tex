@@ -1,0 +1,706 @@
+\documentclass[nofonts,justified,nobib,openany]{tufte-book}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[babel]{csquotes}
+
+\usepackage{biblatex}
+\addbibresource{references.bib}
+\usepackage{tikz,pgfplots,graphicx}
+\usetikzlibrary{math}
+\usetikzlibrary{positioning}
+\usepgfplotslibrary{units}
+\usepgfplotslibrary{fillbetween} % used in sample_lorentzian.tikz
+\pgfplotsset{every axis/.append style={line join=round, line cap=round}}
+
+\pgfplotsset{compat=newest}
+\usepackage{tikzscale}
+
+\usepgfplotslibrary{external}
+\usetikzlibrary{external}
+\tikzexternalize[prefix=tikz/]
+\usepackage{pdfpages}
+
+\usepackage{stylings}
+
+
+\begin{document}
+\includepdf[pages={1-}]{./subfiles/01_abstract.pdf}
+\tableofcontents
+
+\chapter{Theoretical background}\label{chap:background}
+
+A background to the plasma state of matter, including a definition of plasma, characteristics and important equations used in this research, and a background to plasma spectroscopy.
+\section{Definition of plasma}
+Plasma is defined \cite{Chen1984IntroductionFusion} as an ionized gas of charged and neutral particles, which satisfies the \emph{quasi--neutrality} condition. An example of a non--neutral plasma is a beam of charged particles. Yet, a plasma cannot be treated simply as an ordinary gas which is electrically conducting. The particles that carry charge generate electromagnetic fields that are regarded as properties of the plasma. Due to the long range of the inter-particle forces each charged particle in a plasma interacts with a large number of other charged particles resulting in \emph{collective behaviour}.
+
+Inside such a medium diverse collective phenomena can occur which ultimately allow for electron acceleration in laser-driven plasma wakefields.
+
+To better understand this definition, we present two main characteristics of plasma behavior in space (Debye length) and time (plasma oscillations).
+
+\subsection{Debye shielding length}\label{sec:debye}
+The Debye length determines the effective interaction between charged particles in a plasma. The potential field $\phi$ around a charged particle is effectively screened by the cloud of the other charged particles; its force range is now confined within a certain characteristic length, $\lambda_D$, called the Debye shielding length, determined by the density and the temperature of the plasma:
+\begin{equation}
+\phi(r)=\frac{q_i}{4\pi\varepsilon_0 r}\exp{\left(-\frac{r}{\lambda_D}\right)},
+\end{equation}
+where
+\begin{equation}
+\lambda_D=\sqrt{\frac{\varepsilon_0 k_B T_e}{N_e e^2}}=\sqrt{\frac{k_B T}{m_e}}\frac{1}{\omega_p}.
+\end{equation}
+For a plasma with characteristic thermal energy of \SI{1}{\electronvolt}, number density $N_e \sim \SI{e18}{\per\cubic\cm}$, we get $\lambda_D \sim \SI{7}{\nm}$.
+For any volume with a length scale $L$ satisfying 
+\begin{equation}
+L \gg \lambda_D,
+\label{eq:quasiNeutrality}
+\end{equation}
+overall quasi-neutrality is a good approximation. This inequality is the first criterion for the definition of a plasma. If $L\lesssim \lambda_D$, then our approximations break down and significant deviations from quasi-neutrality occur.
+\subsection{Plasma Oscillation}\label{ssec:oscillation}
+The transfer of electrons from a given region of space to a neighbouring region induces a charge separation. This local charge gives rise to an electric field $E$. Since the electrons are much lighter than the ions, they respond much more rapidly to the electric field, and the motion of the ions can be neglected in first instance. The electric field pulls the electrons back to their initial position in order to reduce the local charge separation which is the source of the electric field. Those electrons produce another non-equilibrium distribution in the opposite direction, and so on, performing an oscillatory motion, with the Coulomb force acting as the restoring force and the mass of the electron as the inertia. This is called a plasma oscillation\sidenote{Eq. \ref{eq:plasma-frequency} for $\omega_p$ does not depend on $k$, so the group velocity $\mathrm{d}\omega / \mathrm{d}k$ is zero - the disturbance does not propagate.}, defined as
+\begin{equation}
+		\omega_p=\sqrt{\frac{N_e e^2}{m_e \varepsilon_0}}\si[per-mode=fraction]{\radian\per\sec}.\label{eq:plasma-frequency}
+\end{equation}
+For a typical plasma density of $N_e \sim \SI{e17}{\per\cubic\cm}$, we get \\ $\omega_p \sim \SI{e13}{\radian\per\sec}$, which lies in the microwave range.
+
+\subsection{Collective behaviour criteria}
+A measure for the average number of particles with density $n_e$ inside a sphere of radius $\lambda_D$ is called the Debye number, $N_D$, via which the (dimensionless) plasma parameter $\Lambda$ is defined:
+$$
+    N_D=\frac{4\pi}{3}n_e \lambda_D^3=\frac{\Lambda}{3},
+$$
+\begin{equation}
+    \Lambda=4\pi n_e \lambda_D^3 \propto \frac{T^{3/2}}{\sqrt{n_e}}.
+\end{equation}
+Collective behaviour for plasmas in LWFA environments requires, therefore two criteria: overall quasi-neutrality (eq. \ref{eq:quasiNeutrality}), and hot plasma, yet not too dense: $\Lambda \gg 1$.
+
+
+\section{The spectrum of Hydrogen and Stark Broadening}\label{sec:hydrogen}
+The emission spectrum of atomic hydrogen, due to the electron making a transition between two energy levels, has been divided into a number of spectral series, with wavelengths that can be given by the Rydberg formula. Transitions to the first excited state ($n_f=2$) are known to spectroscopists as the \textit{Balmer series} \sidenote{The others, to name a few, are Lyman ($n_f=1$) and Paschen ($n_f=3$).}, denoted historically as H\textsubscript{$\alpha$}, H\textsubscript{$\beta$}, H\textsubscript{$\gamma$} and so on, where H stands for the element Hydrogen. It is convenient to observe H\textsubscript{$\alpha$} ($n_i=3 \to n_f=2$, \SI{656.23}{\nm}) and H\textsubscript{$\beta$} ($n_i=4 \to n_f=2$ ,\SI{486.13}{\nm}) because both fall in the visible region.
+
+Spectroscopy study of such emission can give information about the physical conditions in the plasma, such as density and temperature. Spectroscopic techniques have the advantage over some other methods -- those involving probes, for example -- that they do not interfere in any way with the plasma. An inherent shortcoming of such observation is the fact that radiation is collected only along the line of sight in the direction of observation and any local information is therefore lost \cite{Thorne1988Spectrophysics}.
+
+The observed intensity of the radiation emitted depends on \cite{McWhirter1965PlasmaTechniques}
+\begin{enumerate}[label=(\alph*)]
+\item The probability that there is an electron in the upper level of the transition
+\item The atomic probability of the transition in question, designated by $A_{i\to j}$ for a transition from level $i$ to level $j$.
+\item The probability of the photons thus produced escaping from the volume of the plasma without being reabsorbed.
+\end{enumerate}
+In many cases it is possible to neglect the last process (c) and use the approximation of optically thin plasma \cite{McWhirter1965PlasmaTechniques} (explained in the next paragraph). The calculation of the transition probability (process (b)) is a matter of atomic physics, for which numerical values are tabulated.% It is the first process that we concentrate on here presenting a plasma model to perform plasma diagnostics.
+\begin{description}
+  \item[\textnormal{Optical depth}] \hfill \\ For a beam of intensity $I$ transferring through a plane--parallel element of medium (plasma in our case) of thickness $z$, the optical depth $\tau$ (dimensionless) is a measure of the opacity of the element:
+\begin{equation}
+    \tau=-\kappa z
+\end{equation}
+Here $\kappa$ is the linear absorption coefficient (\si{\per\cm}). In this simple case, the emergent and incident intensities $I_\text{out}$ and $I_\text{in}$ are related by \marginnote{Equation \ref{eq:radiative-transfer} is the simplest equation of radiative transfer.}
+\begin{equation}
+I_\text{out}=I_\text{in}e^{-\kappa z}.
+\label{eq:radiative-transfer}
+\end{equation}
+Media with optical depths less than unity and exceeding unity, are called optically \emph{thin} and optically \emph{thick}, respectively. I.e., by optically thin plasma, we mean that the freely propagating radiation is not significantly attenuated by the plasma environment and reaches the detector without re--absorption.
+\end{description}
+
+The appropriate plasma model for density and temperature measurements in the present discussion is that of \emph{local thermodynamic equilibrium} (LTE):
+
+In an isolated, closed system where the radiation and matter have reached equilibrium (black body cavity, for example), the distribution of the kinetic motions, level populations and radiation fields are described by some known, well--defined functions of a single parameter --- the system temperature. This situation, called \textit{thermodynamic equilibrium}, serves as a starting point for systems that are not in thermodynamic equilibrium.
+
+In general, the various "temperatures" --- kinetic temp' (via Maxwell--Boltzmann distribution) for the thermal motions , excitation temp' (via Boltzmann factor) for the level populations and radiative temp' (via Planck's relation) for the radiation field would be different from each other, and become the same only for a system in thermodynamic equilibrium. If the level populations were controlled by a single physical mechanism, either collisions or radiative process, their distributions would approach the above mentioned thermodynamic limit. This follows from the principle of detailed balance, or microscopic reversibility, which states that each energy exchange process must be balanced by its exact inverse: For every photon emitted a photon of the same frequency must be absorbed, for every excitation by electron collision there must be a  de--excitation between the same two levels, etc.
+
+%In what follows we will assume that in a small neighbourhood (element of volume) of any point in the system, there is an equilibrium situation described by a local Maxwell-Boltzmann distribution function. For larger spatial scales there may exist gradients of $T$ but these scales are so large that locally the equilibrium is not perturbed; time variation of $T$ may exist, but on such slow time scale that instantaneous equilibrium is a very good approximation.
+
+The assumption of LTE is a very powerful one, since it allows us to use the familiar results of statistical mechanics and thermodynamics  for ionization equilibrium $A^{+} +e\Leftrightarrow A$.
+
+Continuum radiation from the LTE model plasma arises from the interaction of initially free electrons with the positive ions or atoms that are present.
+
+\textbf{Classification of Radiation Transitions}
+The contributions to the spectrum emitted by a plasma are classified according to their type --- continuum or line radiation \cite{Thorne1988Spectrophysics}:
+\tikzsetnextfilename{radiationTransition}
+\begin{marginfigure}
+    \includegraphics[width=\marginparwidth]{./figures/theory/radiationTransition.tikz}
+    \label{fig:electron-transitions}
+    \caption{Energy levels and electron transitions induced by electron--ion interaction. From Plasma Physics and Engineering Fridman and Lawrence}
+\end{marginfigure}
+\begin{enumerate}
+    \item Free--free transition. Both initial and final electron states are in continuum. A free electron in this transition loses part of its kinetic energy in the Coulomb field of a positive ion due to deflection. The emitted energy in this case is a continuum, usually infrared and called bremsstrahlung. The principle of detailed balance requires the existence of the inverse bremsstrahlung process: absorption of radiation by a free electron and ion.
+    \item Free--bound transition. Electron transition between a free state in continuum and a bound state in atom. This transition accounts for energy emitted when electrons recombine with ions and the reverse process of photoionization. The emitted energy in this case is a continuum, too.
+    \item Bound--bound transition. Electron transition between discrete atomic levels, results in emission (and absorption) of spectral lines. %Energy emitted in this case is that of spectral lines.
+\end{enumerate}
+If the free electrons are distributed among the energy levels available to them, then, according to statistical mechanics, their velocities have a Maxwellian distribution. Thus the number of electrons of mass $m_e$ and velocities between $v$ and $v+\mathrm{d}v$ is
+\begin{equation}
+\mathrm{d}N_v=4\pi N_e\left( \frac{m_e}{2\pi k_B T_e} \right)^{3/2} \exp\left(-\frac{m_e v^2}{2k_B T_e}\right) v^2 \mathrm{d}v.
+    \label{eq:maxwellian}
+\end{equation}
+For the bound levels the distributions of population densities are given by the Boltzmann and Saha equation, viz.,
+\begin{equation}
+		\frac{N_\text{i}}{N_\text{j}}=\frac{g_\text{i}}{g_\text{j}}e^{\frac{E_i-E_j}{k_B T}}
+		\label{eq:boltzmann}
+		%=\frac{g_i}{g_j}e^{-\frac{h\nu_{ij}}{k_B T}}
+\end{equation}
+where $g_{i,j}$ are the degeneracies of the states, and
+\begin{equation}
+		\frac{N_\text{e} N_\text{i}}{N_\text{a}}=\frac{g_e g_i}{g_a} \left(\frac{2 \pi m_e k_B T}{h^2}\right)^{3/2}e^{-U_i/k_B T},
+		\label{eq:saha}
+\end{equation}
+where $U_i$ is ionization potential, $g_a$, $g_i$ and $g_e$ are the degenaracies of the atoms, ions and electrons; $N_\text{a}$, $N_\text{i}$ and $N_\text{e}$ are their number densities.
+
+The three equations, \ref{eq:maxwellian}--\ref{eq:saha}, describe the state of the electrons in an LTE model plasma \cite{McWhirter1965PlasmaTechniques}.
+
+% widths, shapes and intensities of spectral lines depend on the temperature, pressure and electron density of the environment of the atom or molecule, as well as on its intrinsic properties. If the broadening and other physical processes are properly understood and the necessary atomic parameters are known, the spectral lines can give information about the physical conditions in the emitting or absorbing gas or plasma.
+
+All transitions emit spectral lines that have finite width. The observed lineshape function $f(\lambda)$ and its width $\Delta \lambda_{1/2}$ depend on the temperature and pressure of the emitting plasma. If the broadening and other physical processes are properly understood and the necessary atomic parameters are known, the spectral lines can give information about the physical conditions in the emitting plasma \cite{Thorne1988Spectrophysics}. The dominant cause of line broadening in plasma is the inter--atomic Stark effect \cite{Wiese1965PlasmaTechniques}. In our plasma conditions, the measurement of Stark half--widths has emerged as one of the most reliable and convenient methods for the determination of electron densities \cite{Wiese1965PlasmaTechniques}.
+
+
+%In the state known as LTE it is possible to find a common temperature, which may vary from place to place, that fits the Boltzmann and Saha distributions and also the Maxwell distribution for the velocities of the electrons.
+
+% when presenting this argument, cite Thorne stating this:
+% In real situations there is often an equilibrium distribution of one or more, but not all, of these forms of energy, and the temperature parameter T may vary from one to another. >>For example, in a  low-pressure discharge tube the gas kinetic temperature may be a  couple of orders of magnitude smaller than the Boltzmann temperature, while the spectrum bears no resemblance to a  black-body continuum at any temperature.<< The form of energy most likely to be out of balance with the others is the radiation energy.
+%The distribution of population densities of the energy levels of the electrons is the same as it would be in a system in complete thermodynamics equilibrium.
+%This model holds when the system is in detailed balance.
+
+
+As stated previously, plasma is a charged medium, and this leads to a broadening of the lines named \textit{Stark Broadening}\sidenote{Classified under \textit{Pressure broadening} mechanism.}: When the density of charged particles in a plasma is sufficiently large, their electric micro--fields perturb the atomic energy levels \cite{Griem1974SpectralPlasmas.}; An emitting atom at a distance $r$ from an ion or electron is perturbed by an electric field $E=e/(4\pi \varepsilon_0 r^2)$, and the interaction between the atom and the field is described by the Stark effect. A perturbation proportional to $E$ exists only in the case of the hydrogen atom or hydrogen--like atoms; for all other atoms the first non-vanishing interaction is the quadratic Stark effect\cite{Thorne1988Spectrophysics}, proportional to $E^2$ and thus to $1/r^4$.
+
+% Since the distance of the perturber is continuously changing, the line shift also changes accordingly giving rise to what is called the Stark Broadening.
+
+The line shape for the Stark broadening assumes that of a Lorentzian \cite{Wiese1965PlasmaTechniques,Hutchinson2002PrinciplesDiagnostics},
+\begin{equation}
+I\left( \lambda \right)=\frac{A^2}{4\left( \left(\lambda-\lambda_0\right)^2+\Delta \lambda_{1/2}^2\right)}. \label{eq:Stark_Broadening}
+\end{equation}
+where $\Delta \lambda_{1/2}\left[\si{\nm}\right]$ is the full width at half maximum for a profile centered at wavelength $\lambda_0$.
+
+This phenomenon for hydrogen lines is very well understood, and the dependence of the line width on the plasma concentration and plasma density has been tabulated \cite{Griem1964PlasmaSpectroscopy,Griem1974SpectralPlasmas.}, but, from the theoretical point of view, there does not exist any model that enables accurate calculations of Stark broadening over a large electron density range\cite{Griem2000StarkPlasmas}. 
+
+The following equation relates electron density to the width of the emission line for the H\textsubscript{$\alpha$} line:
+\begin{equation}
+N_e=\left( \frac{\Delta\lambda_{1/2}}{\gamma\left(N_e,T_e\right)}\right)^{3/2}.
+\end{equation}
+$\gamma\left(n_e,T_e\right)$ may be evaluated numerically and experimentally\cite{Griem2005ComparisonResults}, the dependence of which on the plasma density and temperature is rather weak and it has been neglected in our measurements, at which the following was used:
+\begin{equation}
+N_e\left[\SI{e18}{\per\cubic\cm}\right]=\left( \frac{\Delta\lambda_{1/2}\left[\si{\nm}\right]}{5.4}\right)^{3/2}. \label{eq:delta_lambda}
+\end{equation}
+
+%\section{Paschen Curve}\label{sec:paschen}
+%Paschen's Law states that the breakdown voltage is a unique function of the product of gas pressure $p$ and the gap length $d$ for a particular gas. The curve is shown in figure %\ref{fig:paschen_curve}.
+%\begin{marginfigure}
+    %\includegraphics[width=\marginparwidth]{figures/paschen_curve.PNG}
+    %\label{fig:paschen_curve}
+    %\caption{Paschen curve --- voltage versus the pressure--gap length product.}
+%\end{marginfigure}
+
+\section{Plasma acceleration, laser wake--field acceleration}\label{sec:wakefield}
+Laser--driven plasma-based accelerators were originally proposed by T. Tajima and J. Dawson in 1979 \cite{Dawson1979}, on purpose for experiments on nuclear physics and the structure of matter. Conventional radio--frequency linear accelerators (linacs) begin to approach their limit, because the accelerating electric fields  must  be  less  than  $\SI{100}{\mega \V \per \m}$  to  avoid material breakdown. This limits the highest energies achievable through cost, as each \si{\giga \eV} of energy requires $\sim \SI{100}{\m}$ of acceleration length \cite{Esarey2009PhysicsAccelerators}.
+
+If the limiting factor on the scale of the accelerator is ionisation of the material, then an attractive alternative with reasonably sized facilities is to use plasma as the medium for the acceleration mechanism.
+
+In a plasma accelerator, a longitudinal electron plasma wave (wakefield) is formed and electrons injected into the plasma near the high--density area will experience an acceleration toward it by the plasma. This method, termed \emph{Laer WakeField Acceleration} (LWFA), utilizes an ultrashort ($\sim\SI{100}{\fs}$), high--power (\si{\tera \W}) laser that provides a large electric field because of charge separation. Plasma formed by initiating a discharge in a narrow channel made within a tube (i.e., \textit{discharge capillary}) satisfies promising conditions for a plasma source to exploit LWFA, on a length scale of centimeters \cite{Gonsalves2019PetawattWaveguide,Leemans2014Multi-GeVRegime}. The injected electrons' acceleration continues as the wakefield travels through the plasma waveguide. The research has widely grown since the mid 1980s, when ultrashort laser pulses of sufficient energy became available after the damage threshold inherent in optical amplifiers had been overcome by means of Chirped Pulse Amplification (CPA) \cite{Strickland1985CompressionPulses}.
+ \tikzsetnextfilename{lwfaSchematic}
+ \begin{figure}
+ \centering
+ \includegraphics[width=\textwidth,height=160pt]{./figures/theory/lwfaSchematic.tikz}
+     \caption{Schematic of the LWFA showing an intense short laser pulse generating a plasma wave wake as it propagates through the plasma. Roughly speaking, the laser pulse acts like an intense negative charge by repelling electrons in both the radial and axial directions. Figure adapted from \cite{Sprangle1988LaserGuiding}.}
+     \label{fig:lwfa-schema}
+ \end{figure}
+
+%It is necessary to provide transportation of the laser pulse in an underdense(\textcolor{red}{?}) plasma over distances on the order of the acceleration length $l_\text{acc}$,
+%\begin{equation}
+%    l_\text{acc}\approx\frac{c}{\omega_p}\left(\frac{\omega_0}{\omega_p}\right)^2
+%\end{equation}
+%Here, $\omega_0$ is the  carrier frequency of laser radiation.
+
+To date, two major limitations of LWFA prevent quality electron beams from reaching high energies \cite{Esarey2009PhysicsAccelerators}. The former regards to the laser pulse that creates the wake, and the latter to the acceleration of the charged particles:
+\begin{description}
+  \item[\textnormal{Defocusing of the laser radiation}] \hfill \\ It is necessary to provide transportation of the wake--driving laser without significant transverse spreading when propagating within the plasma. In the absence of some form of optical guiding, the wake would propagate over a distance of the order of the Rayleigh length, $z_R$\sidenote{$z_R=\pi w_0^2/\lambda$, where $\lambda$ is the wavelength of laser light. $w_0$ is defined in eq. \ref{eq:beamParameters}.}. Therefore, conditions should be created for both focusing of laser radiation to a small spot of radius $r_0$, together with transportation of the laser pulse over many Rayleigh lengths without diffraction spreading.
+  \item[\textnormal{\label{dephasing-length}Electron dephasing length}] \hfill \\ The dephasing length is the distance over which an ultra relativistic electron outruns the wakefield of the radiation pulse and no longer gains energy \cite{Esarey2009PhysicsAccelerators,Sprangle1988LaserGuiding}. Multiple acceleration stages, all sequentially phase synchronized, have been proposed to overcome the propagation distance limitation \cite{Esarey2009PhysicsAccelerators}.
+\end{description}
+
+We will now give a short explanation about the geometry of Gaussian beams and plasma waveguides as a method to tackle the defocusing of the laser radiation, and then present a proposed scheme to overcome the dephasing length.
+
+\subsection{Plasma waveguides}\label{ssec:plasma-waveguides}
+Although the divergence of a real laser beam can sometimes be negligible, this is not the case here because the intensities feasible for plasma accelerations can only be achieved by focusing the laser beam to a tiny spot of a few tens of microns in diameter. Such a beam will rapidly diverge in any homogeneous medium. The divergence is conventionally characterized by the Rayleigh length, defined to be the distance over which the intensity of the beam falls by a factor of 2 with respect to that in the focal plane. See figure \ref{fig:typical-beam}.
+ \begin{marginfigure}
+ \includegraphics[width=\marginparwidth]{figures/theory/beam-geometry.PNG}
+ \caption{Typical beam geometry around the focal point.}
+ \label{fig:typical-beam}
+ \end{marginfigure}
+It can be shown \cite{Saleh2019BeamOptics}, that for a beam of initial diameter $D$ focused by a parabolic lens with focal length $f$, the Rayleigh length and the waist radius are
+\begin{equation}
+\begin{split}
+z_R & = \frac{\lambda}{\pi} \cot^2\alpha = \frac{4f^2}{\pi D^2}\lambda
+\\
+w_0 & = \frac{\lambda}{\pi}\cot \alpha=\frac{2f}{\pi D}\lambda
+\end{split}
+\label{eq:beamParameters}
+\end{equation}
+where $\alpha$ is the divergence angle.
+
+For example, a \SI{75}{\mm} beam in diameter of a \SI{800}{\nm} laser focused by a \SI{1}{\m} parabolic lens will have the (doubled) Rayleigh length of about \SI{0.4}{\mm}, whereas the dephasing length of an electron accelerating in plasma wakefield is typically \SIrange{1}{3}{\cm}.
+
+The problem of making a tightly focused laser pulse ($~$\SI{20}{\um} waist diameter) propagate over many tens of Rayleigh lengths without divergence can be solved by constructing a preformed plasma channel with radially decreasing density. Such channels, also known as plasma waveguides, are analogous to polymeric fibers in that they both rely on the same phenomenon --- total internal reflection resulting from axially--peaked refraction index. The simplest fiber consists of a transparent core in which light is confined, and a cladding surrounding the core, with a refractive index smaller than that of the core. On the contrary, plasma waveguides are formed dynamically, their radial decrease of refraction index is continuous and results from the corresponding increase of the plasma density.
+\subsection*{Preformed plasma channel as a waveguide}
+The dispersion relation \cite{Chen1984IntroductionFusion} for an electromagnetic wave propagating in a plasma takes the form 
+\begin{equation}
+\omega^2=\omega_p^2+c^2 k^2.
+\end{equation}
+
+Written as an expression for the index of refraction $\tilde{n}=c/v_\phi = ck/\omega$,
+\begin{equation}
+\tilde{n}=\frac{c k}{\omega}=\sqrt{1-\frac{\omega_p^2}{\omega^2}}\approx1-\frac{\omega_p^2}{2\omega^2}=1-\frac{N_e}{2N_\text{cr}}, \label{eq:index_of_refraction}
+\end{equation}
+where
+\begin{equation}
+    N_\text{cr}=\frac{\omega_L^2\varepsilon_0 m_e}{e^2}=\frac{\pi}{\lambda^2 r_e}
+\end{equation}
+is the critical plasma density, and $r_e$ is the classical electron radius.
+
+The plasma is called \textit{underdense} for $N_e < N_\text{cr}$, with $N_\text{cr}\\\sim\SI{1.7e21}{\per\cubic\cm}$ for an \SI{800}{\nm} laser.
+
+Equation \ref{eq:index_of_refraction} thus shows explicitly that the refractive index $\tilde{n}$ peaks on the axis of a plasma channel if the density has there a minimum.
+
+Interpreted another way, the plasma's less--than--unity refractive index suggests that a normal density profile (maximum on the axis) causes the laser beam to diverge into the walls. If an inverted density profile (minimum on the axis) can be created, however, the lens effect becomes converging; The radiation is focused and trapped by the plasma.
+
+The dependence $N_e(r)$ is usually termed the "radial density profile" (RDP). In an ideal plasma waveguide, the radial density profile is parabolic\sidenote{Essentially a power expansion of $N_e(r)$ up to second order in $r$.} \cite{Sprangle1992PropagationPlasmas},
+\begin{equation}
+    N_e(r)=N_e(0)+\Delta N_e\left( \frac{r}{r_\text{ch}}\right)^2,
+    \label{eq:rdp}
+\end{equation}
+and is of special practical interest, because it is capable of guiding a tightly focused laser pulse while keeping its spot radius constant \cite{Sprangle1992PropagationPlasmas,Esarey1997Self-focusingPlasmas}. Here $N_e(r)$ is the electron density at a distance $r$ from the axis of the beam and $\Delta N_e$ is the increase in the electron density at $r=r_\text{ch}$ compared to the axial value. See figure \ref{fig:rdp_parabola}. Such guiding is accomplished for some waist radius of the guided beam (the \textit{matched} radius $w_m$), which is related to the geometry of a parabolic RDP as follows \cite{Esarey1997Self-focusingPlasmas}\sidenote{The radius of a mismatched beam oscillates as the beam propagates through the channel \cite{Esarey1997Self-focusingPlasmas}.}:
+\tikzsetnextfilename{rdp}
+\begin{marginfigure}
+    \includegraphics[width=\marginparwidth]{figures/theory/rdp.tikz}
+    \caption{Radial Density Profile}
+    \label{fig:rdp_parabola}
+\end{marginfigure}
+
+
+\begin{equation}
+    w_m=\left( \frac{r_\text{ch}^2}{\pi r_e \Delta N_e}\right)^{1/4}
+    \label{eq:matched_radius}
+\end{equation}
+or, stated differently,
+\begin{equation}
+    w_m=\left( \frac{2}{\pi r_e n^{\prime\prime}(0)}\right)^{1/4}.
+\end{equation}
+In other words, it is the on-axis curvature of the RDP that defines the matched radius of the guided beam (if the obvious condition $r_\text{ch}>w_m$ is also satisfied).
+Rearranging eq. \ref{eq:matched_radius} and substituting the numerical values of $\pi$ and $r_e$ leads to a practically convenient relation
+\begin{equation}
+    r_\text{ch}\left[\si{\um}\right]\approx0.09 w_m^2\left[\si{\square\um}\right]\sqrt{\Delta N_e\left[\SI{e18}{\per\cubic\cm}\right]}
+\end{equation}
+which means, in particular, that a minimal (absolute) depth of an RDP capable of waist-matched guiding of a beam with the waist radius $w_0$ is
+\begin{equation}
+\Delta N_\text{min}\left[\SI{e18}{\per\cubic\cm}\right]\approx\frac{113}{w_0^2\left[\si{\square\um}\right]}.
+\end{equation}
+For the beam geometry shown in figure  \ref{fig:typical-beam} ($w_0\approx\SI{70}{\um}$), $\Delta N_\text{min}$ should be about \SI{2e17}{\per\cubic\cm}. % , i.e., is less but still of the same order as the optimal density at which a typical ultrashort laser pulse excites a plasma wake.
+These conditions can be achieved in fully ionised plasma\sidenote{Fully ionised means that every atom is stripped of all its electrons.} channels formed in capillary discharge\cite{Butler2002GuidingWaveguide,Ehrlich1996GuidingExperiments}.
+
+One method for creating a suitable plasma for the above mentioned wave--guide is electrical discharge in an initially evacuated capillary.
+
+Two distinct varieties of capillary discharges are in use:
+\begin{enumerate}
+    \item Ablated capillary, which operate by ablating and subsequently ionizing the wall material to form a plasma with a radial profile suitable for guiding \cite{Ehrlich1996GuidingExperiments,Ferber2019GuidingChannels,Hooker2000GuidingWaveguide}. In these devices the ablation of the capillary wall leads to the practical loss of wall material, and therefore results in a finite capillary lifetime. For polymer made capillaries it is only several hundred shots. It also pollutes the plasma with elements that cannot be fully stripped of electrons, and the relatively low temperature causes less than full ionization that weakens the guiding performance.
+
+    \item Gas--filled capillary, which is pre--filled with gas, such as hydrogen, at a pressure of tens to hundreds of  millibar \cite{Spence2001InvestigationWaveguide}. The ionisation of the gas has the advantage of longer device lifetime.
+\end{enumerate}
+The present thesis is concerned with the second type.
+\begin{description} \item[\textnormal{Why the plasma channel forms?}]\hfill \\ 
+The plasma channel is created by an electric discharge through an insulated capillary. The discharge is strongly dynamic, and three phases can clearly be distinguished \cite{Bobrova2002SimulationsWaveguide}.
+\begin{enumerate}
+    \item The ionization phase, lasting from the current onset, during which electron temperature is increasing. This causes a dramatic rise in the ionization rate and consequently of electron density.
+    \item The formation phase, when redistribution of plasma across the capillary channel begins. The plasma pressure is homogeneous, but the plasma radial distribution of temperature is in--homogeneous, for the following reason. The pressure may be considered uniform across the capillary section, because the time scale of the electric discharge is long in comparison to the capillary diameter ($L=\SI{250}{\um}$) divided by the plasma sound velocity \cite{Chen1984IntroductionFusion}: $$v_s=\sqrt{k_B T_e/M}\sim \SI{e6}{\cm\per\sec},$$where $M$ is the ion mass and $T_e\sim \SI{1}{\electronvolt}$: A characteristic time scale, $\Delta T$, for a perturbation to propagate would be
+    $$\Delta T=\frac{L}{v_s}=\SI{25}{\ns}.$$
+    I.e., shorter compared to the whole  duration of the discharge,
+    
+    $\sim$\SI{500}{\ns}. Under assumption of the ideal gas equation--of--state, $P=N_e k_B T$, this implies a uniform pressure.
+    
+    Heat transfer (or heat conduction) from the electrons to the wall cools the electrons there, causing the current density near the wall to decrease. The heating of the plasma is mostly Ohmic, and is balanced mainly by thermal conduction at the capillary wall. This results in current density increase near capillary axis, and, consequently, a higher temperature there.
+    \item The channel phase, at which the plasma channel remains relatively stable. The plasma temperature at this stage has its maximum on the axis. At constant pressure, a radially decreasing temperature results in an on--axis minimum of the electron density profile of the plasma.
+    \end{enumerate}
+\end{description}
+
+
+
+%\begin{marginfigure}
+%    \includegraphics[width=\marginparwidth]{figures/chen4_30.pdf}
+%    \caption{A plasma lens has unusual optical properties, since the index of refraction is less than unity.}
+%    \label{fig:plasma_lens_chen}
+%\end{marginfigure}
+
+
+%A gas-filled capillary is an attractive technique to confine plasma \cite{Bobrova2002SimulationsWaveguide,Spence2001InvestigationWaveguide} and since the medium responsible for guiding is not damaged by the laser radiation, it is able to guide pulses with a wide range of intensities and wavelengths \cite{Dorchies1999MonomodeTubes}, and can prevent the diffraction spreading of the laser pulses \cite{Sprangle1990NonlinearPlasmas,Bulanov1994ShortChannel}.
+
+\subsection{Multi--stage acceleration scheme}
+
+As stated previously, in addition to defocusing, there is also the dephasing length: trapped electrons outrun or dephase the accelerating phase of the wakefield \cite{Esarey2009PhysicsAccelerators}. The current paradigm within the LWFA community envisions a \si{\TeV} LWFA composed of multiple $\sim$\SI{10}{\GeV} stages, which could be optimized for efficiency, by matching the dephasing length to the depletion length of the laser pulse \cite{Schroeder2010PhysicsColliders}, thus using multiple LWFA stages to successively accelerate one electron beam to higher energies (see figure \ref{fig:coupling_scheme}).
+However, this introduces severe challenges with regard to electron beam transport in between stages \cite{Esarey2009PhysicsAccelerators}.
+\begin{figure}
+\centering
+\includegraphics[width=0.9\textwidth]{figures/theory/coupling_scheme.pdf}
+\caption{Proposed multistage acceleration scheme. The first main laser is initiating the acceleration of the electron beam. A fishbone shaped curved channels are added down the acceleration line enabling further acceleration of the electrons.}
+\label{fig:coupling_scheme}
+\end{figure}
+
+%%
+\chapter{Thesis goals}\label{chap:goals}
+This thesis presents the results of the experimental study of various plasma processes in gas--filled capillary discharge.
+\begin{enumerate}
+  \item Study of the discharge evolution and possibility to obtain low jitter of discharge ignition.
+  \item Study of plasma channel characteristics -- demonstration of optical guiding.
+  \item Spectroscopy analysis on the plasma utilizing Stark broadening to derive the plasma's emission spectra and derive plasma channel profile.
+  \item Development of multi stage capillary --- fish bone approach.
+\end{enumerate}
+\chapter{Methods}\label{chap:methods}
+
+\section{Experiment Scheme}\label{sec:experiment_scheme}
+Our method of plasma generation is based on the laser trigger technique with the injection of gas (a mixture of \SI{95}{\percent} N\textsubscript{2} and \SI{5}{\percent} H\textsubscript{2}) inside the capillary \cite{Bobrova2002SimulationsWaveguide,Spence2001InvestigationWaveguide}.
+The waveguide is designed to operate in an evacuated chamber, maintained at $\sim$\SI{e-4}{\torr}.
+\begin{figure}
+\centering
+    \includegraphics[width=\textwidth]{figures/methods/Laser_based_ignition_scheme.pdf}
+    \label{fig:scheme}
+    \caption{Plasma generation in the N\textsubscript{2}+H\textsubscript{2} gas--filled capillary. The vacuum chamber has been omitted for clarity.}
+    \end{figure}
+The experimental system is shown in figure \ref{fig:scheme}, and applies to all forth--coming discussion.
+
+Two electrodes are mounted at both ends of the capillary. These electrodes are connected to a high-voltage source, which provides a pulse of a few kilovolts amplitude, during the opening of a valve\sidenote[][-50mm]{Product of \textit{Parker Hannifin Corporation}, model 099-0340-900}, set to be opened for \SI{30}{\ms}, that fills the capillary with gas. The ignition is achieved by the igniting laser pulse, that ionizes matter and detaches electrons \cite{Palchan2007ElectronChannel}, which in turn accelerate under the applied high voltage and in an avalanche manner, plasma discharge manifests inside the capillary. The created electron current effectively closes an electrical circuit, for which the plasma ignition acts as a switch. The discharge current is recorded by a Rogowski coil \sidenote[][-75mm]{\textit{Pearson}, model 110A. A wide band current transformer with typical response time of less than \SI{50}{\ns}.} and the current profile is acquired by an oscilloscope.
+
+\begin{marginfigure}[-60mm]
+    \includegraphics[width=\marginparwidth]{figures/methods/setup.pdf}
+    \caption{The 3D printed capillary shown with the two electrodes and a hose--barb to inject the gas.}
+    \label{fig:setup}
+\end{marginfigure}
+
+	\section{Devices in use}\label{sec:devices}
+The experiment was conducted using the following devices:
+\begin{enumerate}
+    \item Capillary
+    \item Nd:Yag Laser, 1064 nm
+    \item Oscillator laser, 800 nm
+    \item High Voltage power supply
+    \item Spectrograph and Andor ccd camera
+    \item Photodiodes
+    \item Optical Elements, viz., lenses and mirrors
+    \item Rogowsky coil
+    \item Digital delay and pulse generator
+    \item Gate valve
+    \item Vacuum chamber
+\end{enumerate}
+\subsection{Capillary production}
+The capillary is the medium at which the plasma channel forms. Its length is \SI{5}{\cm}, and its inner diameter is \SI{500}{\um}. The plastic unit is made of a photopolymer, created in a 3D printer, and is shown in figure \ref{fig:onecapillaryCAD}. A hose connects at the top circular extrusion in the upper face to fill the capillary with gas.
+\begin{figure*}[b]
+    \centering
+    \includegraphics[width=\textwidth]{figures/methods/onecapillary_cad.pdf}
+    \caption{3D drawing of the straight capillary. Designed by Yair Ferber.}
+    \label{fig:onecapillaryCAD}
+\end{figure*}
+\subsection{Lasers used}\label{ssec:lasers}
+In our system two laser were in use, igniting laser and an oscillator laser:
+ \begin{itemize}
+ \item The first is \textit{Tempest 10}, a \SI{1.064}{\um} pulse laser, flashlamp pumped, Q-switched, Nd:Yag laser manufactured by \textit{New Wave Optics}. The pulse duration is $\tau \sim$ \SI{10}{\ns}, and with energy of up to $\sim$ \SI{200}{\mJ}. The ignition of the plasma is initiated by this laser pulse that ablates a small amount of surface in the inner wall of the capillary and produces seed ionization that triggers the discharge after $\sim$\SI{50}{\ns}. In the experiment the energy being used in most cases to obtain reliable ignition was $\sim$\SI{50}{\mJ}. The laser beam was delivered on the capillary axis through the negative electrode by a focusing lens.
+ \tikzsetnextfilename{oscillator_waveform}
+ \begin{marginfigure}
+ \includegraphics[width=\marginparwidth]{figures/methods/oscillator_waveform.tikz}
+ \label{fig:oscillator_single}
+ \caption{Oscillator laser, \SI{84}{\MHz} temporal beam profile.}
+ \end{marginfigure}
+ \item The second laser is \textit{Mai Tai}, a \SI{800}{\nm} mode-locked oscillator, manufactured by \textit{Spectra Physics}, with a Ti:Sa crystal as the lasing medium.
+ It produces \SI{15}{\fs} temporal pulses at a \SI{84}{\MHz} rate (i.e., a pulse every \SI{12.5}{\ns}) with \SI{5}{\nano\J} per pulse. This beam was directed, in some parts of the experiment, through the capillary and recorded with a fast photo--diode\sidenote{\textit{ThorLabs DET10A}} (see figure \ref{fig:oscillator_single}), thus enabling one to compare the optical guiding at different times along the discharge process.
+ \end{itemize}
+ \subsection{High Voltage pulser}
+ The high voltage pulser provides the high voltage difference applied on the two electrodes. See picture on the right. Its key element is the energy storing capacitor that must be charged to a high voltage (that to be applied on the electrodes) and then discharged through the capillary and the rest of the electric chain. The pulser was designed, built, and still maintained, by Levin. See  \cite{Levin2009ExcitationAcceleration} pp. 46-47 for more information considering the setup and explanation of its operation.
+ \begin{marginfigure}
+ \includegraphics[width=\marginparwidth]{figures/methods/hvpulser.PNG}
+ \caption{Discharge Pulser high voltage, designed, built and Maintained by Michael Levin.}
+ \end{marginfigure}
+ 	
+ \subsection{Spectrograph and Andor CCD camera}\label{ssec:spectro}
+ To measure the capillary plasma density and to validate the existence of a parabolic radial density profile at the time segment optical guiding exist, we performed a direct spectroscopic study of the plasma emission. The plasma emission during the discharge was collected by an imaging system and imaged onto the entrance slit of a detection system, composed of a spectrometric instrument\sidenote{\textit{Spectra--Pro} model 300i}, fitted with a 2D 1024$\times$256 element intensified charge-coupled device (CCD) fast camera\sidenote{\textit{Andor}, model DH520.}. The CCD allows for recording images with both spectral and spatial resolution.
+ 
+ The detector gating and delay were set by a digital delay and pulse generator\sidenote{\textit{Stanford Research Systems},\newline model DG--535.} that triggers the CCD camera.
+ 
+ The spectrometric instrument is a Czerny-Turner arrangement, made of a plane reflection grating. Light entering the entrance slit is collimated by a concave mirror and directed towards the plane reflection grating. Light diffracted from the grating forms a plane wave that is focused by another concave mirror onto the exit slit. Only one wavelength leaves the grating in the right direction to reach the exit slit, and tuning is achieved by rotating the grating, controlled by Andor's computer software. See figure \ref{fig:spectrometer}. In our measurements we used a 1800 lines/mm grating; Spatial resolution is controlled by the width of the entrance slit.
+ \begin{marginfigure}
+ \includegraphics[width=\marginparwidth]{figures/methods/spectrometer.pdf}
+ \caption{Optical layout for the spectrometric instrument.}
+ \label{fig:spectrometer}
+ \end{marginfigure}
+
+%%
+\chapter{Experimental Results}\label{chap:experimental_work}
+\section{Capillary discharge, Jitter}\label{sec:jitter}
+Experiments in which plasma channels are supposed to be ready-to-use guiding media require a low ignition jitter (the spread in initiation of the current), so as to provide results reproducible on shot-to-shot basis. Typical guiding window lasts about \SIrange{50}{100}{\ns}, so ignition jitter of about \SI{10}{ns} would be tolerable.
+
+This was our goal as a first experiment with the gas injected capillaries.
+
+A schematic drawing of the system is shown in figure \ref{fig:scheme}.
+\tikzsetnextfilename{discharge_sample}
+ \begin{marginfigure}
+     \includegraphics[width=\marginparwidth]{figures/results/jitter/discharge_sample.tikz}
+     \caption{A typical plasma discharge. Blue waveform is the current profile obtained from the Rogowsky coil. In green is the photo--detector rise up from the igniting Nd:Yag pulse.}
+     \label{fig:discharge_sample}
+ \end{marginfigure}
+To anchor the discharge starting process to a fixed event to which we can refer, we mounted a photo--detector close to the igniting laser radiation output, thus enabling one to fix a time event at which the plasma discharge occurs; The photo--detector allows for visualizing the synchronization. Recording to an oscilloscope both the photo--diode rise-up signal and the current profile obtained from the Rogowsky coil, we monitored the igniting pulse and the discharge current for consecutive 12 ignitions performed at constant time intervals.
+%\tikzsetnextfilename{low_jitter}
+\begin{figure*}
+    \centering
+    \includegraphics[width=\textwidth]{figures/results/jitter/low_jitter.pdf}
+    % \includegraphics[width=\textwidth]{figures/results/jitter/low_jitter.tikz}
+    \caption{12 consecutive capillary discharges recorded one on top of the other, demonstrating low ignition jitter when generating plasma in the capillary.}
+    \label{fig:low_jitter}
+\end{figure*}
+The time resolution is evaluated while taking into consideration both the oscilloscope sampling rate and the prior to ignition electrical components' jitter. The jitter is calculated as half the difference between the earliest and latest ignition timing of multiple independent ignitions. Overall, we evaluate the jitter to be
+\begin{equation}
+	\tau_\text{jitter}\approx 1\pm 0.36\si{\ns}
+\end{equation}
+This implies that we can determine the time window for optical guiding, with no concerns of shooting too early or too late with respect to the over-all plasma lifetime. Also, we deduce that our system and its over all components is relatively stable and reliable.
+
+On the contrary, a much less stable regime was observed if the experiment is repeated \textbf{without} the igniting laser pulse. The explanation is that the electrical breakdown evolves in a much less deterministic behaviour; The process of the electrons being ripped from the molecules in a cascading manner is rather not stable. The jitter observed under this constraint of absent igniting laser pulse is on the order of \SI{80}{\us}. See figure \ref{fig:multiple}.
+%\tikzsetnextfilename{high_jitter}
+\begin{figure*}
+    \centering
+    \includegraphics[width=\textwidth]{figures/results/jitter/high_jitter.pdf}
+    %\includegraphics[width=\textwidth]{figures/jitter/high_jitter.tikz}
+    \caption{Nine different plasma discharges without the igniting Nd:Yag laser pulse, all recorded on the same axes. The time segment is zoomed--in in the bottom inset.}
+    \label{fig:multiple}
+\end{figure*}
+These results apply to two types of plasma channels generated by discharge in capillary and used by plasma accelerators: That of plasma wakefield acceleration (PWFA)\cite{andBeharEhudGasPulse} wherein the wakefield is formed by a relativistic particle beam, and that of laser wakefield accleration (LWFA) \cite{andBeharEhudLowCapillary}, at which a laser pulse is introduced to form the charge--density wake. The plasma characteristics should obviously be different in the two (homogeneous plasma density on the order of $\sim$\SI{e15}{\per\cubic\cm} in the first, as opposed to parabolic density profile with plasma density $\sim$\SI{5e17}{\per\cubic\cm} in the latter), but the need for a low jitter--controlled system is common.
+
+\section{Duration of the parabolic density profile}\label{sec:duration-of-guiding}
+We are now in a position to estimate the timing and duration of the parabolic density profile. For that, with the system set--up as in the previous measurement, we aligned the \SI{800}{\nm} oscillator laser (\ref{ssec:lasers}) through the capillary and directed the outgoing beam out of the vacuum chamber to the active area of a fast photo-diode detector. This detector output was connected to the same measuring oscilloscope as well.
+\begin{figure}
+\centering \includegraphics[width=\textwidth]{figures/results/oscillator/oscillator_system_setup.pdf}
+\caption{System set--up used to measure the duration of the plasma channel.}
+\label{fig:oscillator}
+\end{figure}
+Upon plasma discharge, we recorded the optical guiding of the pulse--train, shown in figure \ref{fig:oscillator_single}, and watched after an increase in the detected signal amplitude while it interacts with the plasma inside the capillary. The result is shown in figures \ref{fig:guiding1}-\ref{fig:guiding2}.
+
+The optical guiding is quantitatively estimated as the transmission factor --- ratio of the maximal amplitude obtained during the guiding window to the amplitude before the plasma discharge.
+
+At the upper plot is the plasma discharge current profile, similar to that shown in \ref{fig:discharge_sample}, as delivered from the Rogowsky coil. The applied voltage for these two measurements was $\sim$\SI{7}{\kilo\volt}. Along it is the signal arriving from the Nd:Yag photo--diode detector (green waveform), which, as mentioned before, tells us whether the discharge is timed with the igniting laser and is jitter--controlled. The lower waveform is that recorded from the fast--photodiode with the oscillator laser as its signal source.
+\tikzsetnextfilename{guiding01}
+\begin{figure*}
+    \centering
+    \includegraphics[width=\textwidth,height=200pt]{figures/results/oscillator/guiding01.tikz}
+    \caption{Guiding of the pulse train (\textcolor{red}{red}) shown in reference to the igniting laser (\textcolor{ForestGreen}{green}), and the discharge current (\textcolor{blue}{blue}).}
+    \label{fig:guiding1}
+\end{figure*}
+%\vskip 1em
+\tikzsetnextfilename{guiding02}
+\begin{figure*}
+    \centering
+    \includegraphics[width=\textwidth,height=200pt]{figures/results/oscillator/guiding02.tikz}
+    \caption{Guiding of the oscillator laser, with a higher voltage difference applied to the capillary electrodes, $\sim$\SI{10}{\kilo\volt}, giving a larger transmission factor.}
+    \label{fig:guiding2}
+\end{figure*}
+The explanation for the improved transmission of the laser radiation during the formation of the plasma channel was mentioned in section \ref{ssec:plasma-waveguides}: If an inverted radial density profile (minimum on the axis, refer to figure \ref{fig:rdp_parabola}) can be created, a plasma lens forms and the radiation is focused and trapped by the plasma. See figure \ref{fig:chen4_31}.
+\begin{marginfigure}
+\includegraphics[width=\marginparwidth]{figures/results/oscillator/chen_4_31.pdf}
+\caption{Plasma confined inside the capillary will trap the \SI{800}{\nm} laser light only if the plasma has a density minimum on axis.}
+\label{fig:chen4_31}
+\end{marginfigure}
+
+An additional phenomenon to remark is that the oscillator pulse--train is blocked by the plasma in the later stage of the discharge. In this part of the plasma lifetime the capillary wave--guide is not operating. The plasma functions as a medium that refracts the radiation in some uncontrolled way to the capillary plastic walls, thus less light is collected by the photo--detector. The system approaches the state prior to the ignition after the plasma is diffused into the vacuum chamber.
+
+In addition to the timing and duration of the plasma channel, we measured the optical guiding for different parameters: applied voltage over the capillary electrodes, laser power and injected gas pressure. Analysis shows that the stronger parameter is the applied voltage. The effect is seen in figure \ref{fig:guiding2}, for which a $\sim$\SI{11}{\kilo\volt} was applied to the capillary terminals, and a peak current of \SI{240}{\A} was measured by the Rogowsky coil. The optical guiding for this measurement is as high as $\sim 8$.
+\tikzsetnextfilename{voltage_vs_guiding}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth,height=140pt]{figures/results/oscillator/voltage_vs_guiding.tikz}
+    \caption{Correlation for optical guiding to different applied voltage differences across the capillary ends. This behaviour suggests an upper limit to the transmission ratio.}
+    \label{fig:voltagevsguiding}
+\end{figure}
+
+The $\sim$ \SI{12.5}{\ns} time resolution of the pulse--train enables us to estimate the temporal duration of the plasma channel (the vertical red grid lines in figures \ref{fig:guiding1}-\ref{fig:guiding2} as a visual aid) to be $$\Delta t_\text{channel}=50 -100\ \si{\ns}.$$
+
+\section{Spectroscopic measurements}\label{sec:spectro}
+To estimate quantitatively the depth of the plasma channel and the plasma density, we performed an additional measurement with a spectrometer and a fast camera, introduced in section \ref{ssec:spectro}, and analysed the emission line attributable to Stark effect.
+
+\subsection{Radial density profile}\label{ssec:radial}
+We installed an imaging system that images the capillary entrance, as shown in figure \ref{fig:radial_system}. For an accurate and reliable measurement, we needed to over--come two main difficulties:
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{figures/results/spectro/radial_system.pdf}
+\caption{Experimental setup and typical spectrum of the plasma at the exit of the capillary.}
+\label{fig:radial_system}
+\end{figure}
+In order to magnify the circular cone of plasma light emitted from the capillary entrance imaged on the spectrometer slit, we placed a converging lens in a distance a bit longer from its focal length so to obtain as large as possible transverse magnification. The drawback is the loss of irradiance, which was compensated with the gain mechanism of the microchannel plate of the CCD camera.
+
+Secondly, as mentioned before (\ref{sec:jitter}), the plasma channel lasts for \SIrange{50}{150}{\ns}, and this leads to a constraint on the duration of the camera gating window. Clearly, a long exposure time ($\gtrsim \SI{1}{\us}$) would yield a constant profile. But to capture the parabolic plasma channel we rather gated (using the digital delay generator) the CCD camera to exposure times of \SI{40}{\ns}\marginnote{To produce a sharp image of a moving subject, a fast shutter speed is required.}. That obviously led to signal--to--noise--ratio difficulties when analysing the digital data --- the shutter is not opened for long enough for the image-sensing area to be exposed to light.
+
+The simple imaging system was composed of two converging lens (fused--silica, bi--convex, \diameter \ 2 inch), the first with a shorter focal length, that imaged the capillary entrance magnified by $\times 5$ on the spectrometer entrance slit. I.e., the image of a \SI{0.5}{\mm} capillary was $\sim$ \SI{2.5}{\mm} in diameter, corresponding to about \SI{40}{\percent} of the CCD's vertical range. The spectrometer slit had the width of \SI{150}{\micro\metre}, providing a spectral resolution of about \SI{0.3}{\nm}.
+
+The grating was rotated to the central wavelength of \SI{656.3}{\nm}, which, as mentioned in section \ref{sec:hydrogen}, is the central wavelength of hydrogen H\textsubscript{$\alpha$} line. This line, when emitted within a plasma, undergoes Stark broadening from which the electron density can be deduced, with the density estimate based on equation \ref{eq:delta_lambda}. A dielectric mirror coated for zero degrees at \SI{1.064}{\um} prevented the radiation of the igniting laser from entering the spectrometer.
+
+We gated the CCD camera, as stated, to \SI{40}{\ns} gate--on time at time windows that correspond to the maximal transmission of the oscillator signal (as described in \ref{sec:duration-of-guiding}), and set the gain of the microchannel plate to its highest, at the level of 9.
+
+The raw spectroscopic images captured by \textit{Andor} in a \texttt{.fit} file format were processed in the \textit{Matlab} environment and its curve-fitting tool. The steps for the analysis are as follows (figure \ref{fig:spectra_analysis}):
+\begin{itemize}[label={$-$}]
+\item For each row of the data (256 rows), find a Lorentzian fit for the intensity profile, with the line half--width ($\Delta\lambda_{1/2}\left[\text{px}\right]$) as a free parameter (figure \ref{fig:single-lorentzian}).
+\item Then, plot the set of $\Delta\lambda_{1/2}$ versus the corresponding spatial coordinate.
+\item To convert $\Delta\lambda_{1/2}\left[\text{px}\right]$ to \si{\nm}, we used the known Sodium doublet for the lines $D_1=\SI{589.59}{\nm}$ and $D_2=\SI{589.00}{\nm}$, which corresponds to 18 horizontal pixels.
+\item This line broadening was translated to plasma density using equation \ref{eq:delta_lambda}.
+\item Finally, convert the spatial coordinate axis to position (capillary radius, \si{\mm}) using the magnification factor of the imaging system together with the pixel--to--\si{\um} conversion factor\sidenote{pixel size = \SI{26}{\um}$\times$ \SI{26}{\um}.}.
+\end{itemize}
+Due to combination of variables' error for each step, the measurement is subjected to an overall relative error of about $\sim$\SI{20}{\percent}.
+
+\begin{figure*}
+    \centering
+    \includegraphics[width=\textwidth]{figures/results/spectro/spectra_analysis.png}
+    \caption{An explanatory figure of the steps involved in the analysis of the raw spectroscopic data.}
+    \label{fig:spectra_analysis}
+\end{figure*}
+\tikzsetnextfilename{sample_lorentzian}
+\begin{figure}
+    %\centering
+    \includegraphics[width=\textwidth,height=220pt]{figures/results/spectro/sample_lorentzian.tikz}
+    \caption{Stark broadening of the H\textsubscript{$\alpha$} line. In our measurements the broadening was on the order of \SI{3}{\nm}.}
+    \label{fig:single-lorentzian}
+\end{figure}
+Figure \ref{fig:plasma_channel_spectro} plots the experimentally measured plasma density as a function of position (capillary radius) across a \SI{500}{\um} capillary diameter at a delay time \SI{400}{\ns} after the rise of the discharge current pulse. The maximum discharge current was \SI{165}{\A}.
+\tikzsetnextfilename{parabolic_profile}
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth,height=170pt]{figures/results/spectro/parabolic_profile.tikz}
+\caption{Radial density profile of the plasma from the measured spectrum, \SI{400}{\ns} after the rise of the current --- at the time segment at which the plasma channel exists.}
+\label{fig:plasma_channel_spectro}
+\end{figure}
+
+For these conditions, there is a density minimum on the axis of the capillary; at early delay times the minimum at the radial density profile was not created, and at later delay times it disappears. The increase in the electron density is found to be 
+\begin{equation}
+    \Delta N_e \sim \SI{.4e18}{\per\cubic\cm}
+\end{equation}
+
+with
+\begin{equation}
+r_\text{ch}\approx \SI{50}{\um} \text{ and } N_e\left(0\right)\approx \SI{0.4e18}{\per\cubic\cm}.
+\end{equation}
+
+These conditions provide an optimal plasma channel that can be used for guiding an intense laser pulse for LWFA accelerators.
+
+\subsection{Longitudinal density profile}\label{ssec:longi}
+
+The method described in section \ref{ssec:radial} allows for measuring the radial density profile only at the capillary output, but it is also important to verify longitudinal homogeneity of the plasma density. For this purpose the entire length of the \SI{5}{\cm} capillary was imaged along the entrance slit of the spectrometer.
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{figures/results/spectro/longitudinal_system.pdf}
+    \caption{Experimental system to image plasma emission in the longitudinal dimension.}
+    \label{fig:longi_system}
+\end{figure}
+To achieve that, we built the system shown in figure \ref{fig:longi_system}, with the main difference from the one before, figure \ref{fig:radial_system}, being a periscope assembly (not shown) used to flip the strip of plasma emission by \SI{90}{\degree} so it enters into the entrance slit of the spectrometer. As opposed to the magnification issue we had before, now a minification of the image was sought. We positioned the capillary on a move--able mount, and performed 5 capillary discharges, each corresponding to a segment of \SI{1}{\cm} of the capillary length. The plasma density was estimated based on the H\textsubscript{$\alpha$} line Stark broadening, as before; Gate--on time windows of the Andor ccd camera were on the scale of \SI{1}{\us}. The result is shown in figure \ref{fig:longi_profile}, for which we obtained mean plasma density $\bar{N}_e$ of
+\begin{equation*}
+    \bar{N}_e \sim \SI{3e17}{\per\cubic\cm}.
+\end{equation*}
+\tikzsetnextfilename{longitudinal}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth,height=170pt]{figures/results/spectro/longitudinal.tikz}
+    \caption{Longitudinal plasma density profile in a \SI{5}{\cm} long, \SI{0.5}{\mm} diameter straight capillary. Red line indicates average density.}
+    \label{fig:longi_profile}
+\end{figure}
+
+\section{Two stage capillary}
+As stated in the theoretical introduction (section \ref{sec:wakefield}), a "fish--bone" capillary composed of two channels or more can be used to overcome limitations in the dephasing length when accelerating electrons. For that goal we designed a Y--shape capillary (figure \ref{fig:doublecapillaryCAD}) on which we performed an experiment to investigate the parameters that permits optical guiding in a very similar way to that presented in section \ref{sec:duration-of-guiding}.
+\tikzsetnextfilename{oscillator_double_waveform}
+\begin{marginfigure}
+\includegraphics[width=\marginparwidth]{figures/methods/oscillator_double_waveform.tikz}
+\label{fig:oscillator_double}
+\caption{Two \SI{84}{\MHz} temporal beam profiles of the oscillator laser, one delayed with respect to the other.}
+\end{marginfigure}
+\begin{figure*}
+    \centering
+    \includegraphics[width=\textwidth]{figures/results/doubleCapillary/doublecapillary_cad.pdf}
+    \caption{3D drawing of the 2--stage capillary. Designed by Yair Ferber.}
+    \label{fig:doublecapillaryCAD}
+\end{figure*}
+The proposed method is to split the oscillator pulse--train into two beams, one for each capillary channel. In order to differentiate between the two when viewed on an oscilloscope, one beam entered a \SI{6}{\ns} delay line, resulting the temporal profile shown in figure \ref{fig:oscillator_double}. As before, a fast--photodiode was mounted outside the vacuum chamber, collecting the light from the two beams after passing through the channels.
+
+The two channel capillary goes a step beyond the straight one, but complicates the measurement in a few aspects. Note that the curved channel doesn't posses a line--of--sight from the entrance plane to the exit plane; The capillary radius of curvature (\SI{50}{\cm}), length (\SI{6.5}{\cm}) and diameter (\SI{500}{\um}) doesn't allow a straight ray to propagate through it --- see figure \ref{fig:lineofsight}. For that reason, when carefully aligning the laser beam, we relied on refractions from the capillary plastic walls to be collected and focused by a positive lens outward to the photo--diode.
+
+As a first check, we performed the measurement only on one channel, the shorter of the two. We inserted a metal wire to the longer one, thus dis--functioning it by blocking plasma from entering it.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{figures/results/doubleCapillary/double_capillary_system.pdf}
+    \caption{Experimental system for the Y--shape, curved capillaries.}
+    \label{fig:twostage_system}
+\end{figure}
+\begin{marginfigure}
+\includegraphics[width=\marginparwidth]{figures/results/doubleCapillary/line_of_sight.pdf}
+\caption{The curved channel does not posses line--of--sight.}
+\label{fig:lineofsight}
+\end{marginfigure}
+
+In contrast to the previously presented measurements, now a stable, jitter controlled operation was achieved when the triggering Nd:Yag laser pulse was delivered to the \textbf{positive} electrode, as opposed to the set--up until now, in which it was delivered to the negative one. The inverse arrangement also radiated, upon plasma discharge, noisy electromagnetic radiation to the surrounding, which, in turn affected the recorded signal of the measuring devices (Rogowsky coil and photo--detector).
+
+We estimate the jitter to be very similar to that obtained in section \ref{sec:jitter}, at $\tau_\text{jitter}\approx 1\pm 0.5\si{\ns}$.
+\tikzsetnextfilename{low_jitter_curved}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth,,height=170pt,height=180pt]{figures/results/doubleCapillary/low_jitter.tikz}
+    \caption{Demonstration of low--jitter ignition set--up when generating plasma in the curved capillary. A plot of nine consecutive Rogowsky coil current profiles in reference to the igniting Nd:Yag pulse (Green).}
+    \label{fig:curved-low-jitter}
+\end{figure}
+
+Another thing to point out is that when creating a plasma discharge, the photo--diode also detected unwanted light from the emitting plasma --- light that is collected by the same lens that focuses the oscillator laser. This plasma light caused a "bump" in the time--domain voltage profile monitored on the oscilloscope, with a maximal peak of about 7 to 8 that of the oscillator signal prior to the plasma discharge. To minimize this effect we positioned an opaque screen with a small hole (about \SI{1}{\mm} in diameter) in the capillary exit plane (figure \ref{fig:opaque}).
+
+\begin{marginfigure}
+\includegraphics[width=\marginparwidth]{figures/results/doubleCapillary/opaquescreen.pdf}
+\caption{Opaque screen with a small hole positioned close to the back plane of the capillary, intended to block light emitted from the plasma discharge.}
+\label{fig:opaque}
+\end{marginfigure}
+
+Figure \ref{fig:oscillator-bump} demonstrate a single capillary discharge in a curved channel. The plasma discharge is timed with the igniting Nd:Yag laser pulse (green waveform), and the Rogowsky coil indicates satisfactory plasma discharge. The \SI{800}{\nm} pulse-train (bottom plot) is observed prior to the Nd:Yag pulse, then sharply rising up at time $t=0$ due to scattered Nd:Yag light, and then rises up in a "bump" shape --- caused by light emitted by the plasma (minimized as much as possible by the opaque screen at the capillary front). The former was not significant in the previous measurements due to the use of a \SI{0}{\degree}--mirror for the Nd:Yag wavelength, together with the fact that pulse was delivered to the other side of the capillary, so that less scattered light reached the photo--detector. The latter, the slowly varying bump, was eliminated in the previous measurements using an aperture (iris diaphragm) positioned between the capillary and the photo--detector, before the focusing lens. We mounted a stop in the current set--up too, but that wouldn't redact completely the unwanted light.
+
+Note that these two optical signals that the photo--detector detects are not problematic, and one is still able to infer information about the system and the plasma process. We see the decay in the transmittance (\SIrange{0.2}{1.5}{\us} after ignition), and the re--appearance of the oscillator signal after the plasma vanishes from the capillary and diffuses to the vacuum chamber. This implies that the plasma does influence the laser radiation, with the lack of conditions for transportation of the laser radiation.
+\tikzsetnextfilename{guiding01_double}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{figures/results/doubleCapillary/guiding01_double.tikz}
+    \caption{Capillary discharge current profile shown in reference to the igniting laser, (\textcolor{ForestGreen}{green}, top), and the oscillator pulse train intensity (normalized, bottom), as detected by the photo--diode.}
+    \label{fig:oscillator-bump}
+\end{figure}
+
+\tikzsetnextfilename{guiding02_double}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{figures/results/doubleCapillary/guiding02_double.pdf}
+    %\includegraphics[width=\textwidth]{figures/results/doubleCapillary/guiding02_double.tikz}
+\end{figure}
+
+\chapter{Discussion and Summary}\label{chap:summary}
+
+In this thesis we studied various configurations of plasma channels generated in gas filled--capillaries for guiding of high intensity lasers in the LWFA scheme. The capillary configurations are intended to be a compact medium for composing several acceleration stages to propagate sequential laser pulses over many Rayleigh lengths, in a "fish--bone" scheme.
+
+We demonstrated a working set up to produce jitter controlled plasma discharges in both straight and curved capillaries, achieving control on the time scale of a few nanoseconds,
+\begin{equation*}
+    	\tau_\text{jitter}\approx 1\pm 0.36\si{\ns}.
+\end{equation*}
+This achievement contributed to two scientific publications, namely  \cite{andBeharEhudLowCapillary} and \cite{andBeharEhudGasPulse}.
+
+Using a low intensity, pulse--train laser beam passing through the capillary, we confirmed the formation of a plasma channel in the capillary during the plasma lifetime. We compared the signal voltage before the capillary discharge to the maximal signal voltage recorded during the discharge. The plasma channel forming in the capillary resulted optical guiding that caused an increase of the transmitted signal in this specific time window, at which we observed an increase by as much as $\sim \times 8$.
+
+The plasma channel appeared to form in a consistent timing, about \SI{250}{\ns} after the capillary ignition, and to last 
+\begin{equation*}
+    \Delta t_\text{channel}=50-150\ \si{\ns}.
+\end{equation*}
+
+We observed a radial, parabolic parabolic density profile in the plasma channel, with an electron density depth of about 
+$$\Delta N_e \approx\SI{0.4e18}{\per\cubic\cm}$$
+and channel radius
+$$r_\text{ch}\approx \SI{50}{\um}.$$
+
+The on-axis electron density was measured to be on the order of $$N_e(0)\approx \SI{0.4e18}{\per\cubic\cm}.$$
+
+%We also imaged, with the same considerations of the emitted H\textsubscript{$\alpha$} line as an indicator, the \SI{5}{\cm} longitudinal capillary dimension to estimate the mean plasma density during a discharge. The plasma density was found to be homogeneous across the length, with a mean, $\bar{N}_e$, on the order of
+%\begin{equation*}
+%    \bar{N}_e \approx \SI{0.28e18}{\per\cubic\cm},
+%\end{equation*}
+% and a standard deviation of about \SI{0.33e17}{\per\cubic\cm}.
+
+%When experimenting with a curved capillary, we couldn't repeat the same demonstration of optical guiding with the oscillator laser pulse--train.
+Experimentation with the curved capillary showed similar results in regard to jitter when igniting the plasma discharge by use of the Nd:Yag igniting pulse, a jitter on the order of a few nanoseconds.
+
+We arranged a similar set--up using the oscillator pulse--train, traveling through the capillary, to observe the plasma channel that forms in the capillary. The plasma observed to influence the laser radiation by becoming opaque in the later stages of the capillary discharge, until the plasma diffuses to the vacuum chamber.
+
+In future experiments we will check for the guiding conditions of the curved gas filled capillaries and explore further the possibilities of incorporating these capillaries in a laser wakefield electron acceleration scheme. If successful, it would provide a possibility to accelerate electrons to \si{\tera\eV} energy levels at distances of tens of meters in comparison to tens of kilometers in classical accelerators.
+%%
+\newgeometry{marginparwidth=0pt}
+\printbibliography
+\restoregeometry
+\end{document}

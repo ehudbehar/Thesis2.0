@@ -1,0 +1,18 @@
+\begin{tikzpicture} %rgb/.code={\definecolor{mycolor}{RGB}{#1}},rgb color/.style={define rgb={#1},mycolor}]
+\begin{axis}[
+xmin=-2e-7,
+xmax=1.7e-6,
+grid=major,
+change x base,
+x SI prefix=micro,
+xlabel={Time [\si{\us}]},
+ylabel={Current [\si{\A}]},
+ytick={-5,0,5,10,15},
+yticklabels={-50,0,50,100,150},
+]
+\addplot [blue, line width = 1] 
+table[x=t,y=ch1,col sep=comma]{figures/results/jitter/discharge_sample.csv};
+\addplot [ForestGreen, line width = 1] 
+table[x=t,y=ch2,col sep=comma]{figures/results/jitter/discharge_sample.csv};
+\end{axis} 
+\end{tikzpicture}
