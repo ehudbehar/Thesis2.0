@@ -1,0 +1,3 @@
+tikz/guiding01_double.pdf: ./figures/results/doubleCapillary/guiding_curved_01.csv
+tikz/guiding01_double.pdf: ./figures/results/doubleCapillary/guiding_curved_01.csv
+tikz/guiding01_double.pdf: ./figures/results/doubleCapillary/guiding_curved_01.csv
